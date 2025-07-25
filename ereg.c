@@ -564,7 +564,11 @@ static void php_do_ereg_replace(INTERNAL_FUNCTION_PARAMETERS, int icase)
 		if (Z_STRVAL_P(arg_pattern) && Z_STRLEN_P(arg_pattern)) {
 			pattern = zend_string_copy(Z_STR_P(arg_pattern));
 		} else {
+#if PHP_VERSION_ID >= 80500
+			pattern = ZSTR_EMPTY_ALLOC();
+#else
 			pattern = STR_EMPTY_ALLOC();
+#endif
 		}
 	} else {
 		convert_to_long_ex(arg_pattern);
@@ -577,7 +581,11 @@ static void php_do_ereg_replace(INTERNAL_FUNCTION_PARAMETERS, int icase)
 		if (Z_STRVAL_P(arg_replace) && Z_STRLEN_P(arg_replace)) {
 			replace = zend_string_copy(Z_STR_P(arg_replace));
 		} else {
+#if PHP_VERSION_ID >= 80500
+			replace = ZSTR_EMPTY_ALLOC();
+#else
 			replace = STR_EMPTY_ALLOC();
+#endif
 		}
 	} else {
 		convert_to_long_ex(arg_replace);
@@ -589,7 +597,11 @@ static void php_do_ereg_replace(INTERNAL_FUNCTION_PARAMETERS, int icase)
 	if (arg_string) {
 		string = zend_string_copy(arg_string);
 	} else {
+#if PHP_VERSION_ID >= 80500
+		string = ZSTR_EMPTY_ALLOC();
+#else
 		string = STR_EMPTY_ALLOC();
+#endif
 	}
 
 	/* do the actual work */
